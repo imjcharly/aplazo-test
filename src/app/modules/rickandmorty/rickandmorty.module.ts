@@ -8,7 +8,6 @@ import { LocationsComponent } from './pages/locations/locations.component';
 import { CharactersComponent } from './pages/characters/characters.component';
 
 import { LoaderComponent } from 'src/app/components/loader/loader.component';
-import { GenericCardComponent } from 'src/app/components/generic-card/generic-card.component';
 
 
 @NgModule({
@@ -17,7 +16,6 @@ import { GenericCardComponent } from 'src/app/components/generic-card/generic-ca
     CharacterDetailComponent,
     LocationsComponent,
     CharactersComponent,
-    GenericCardComponent,
     LoaderComponent
   ],
   imports: [
@@ -26,8 +24,7 @@ import { GenericCardComponent } from 'src/app/components/generic-card/generic-ca
 
   ],
   exports: [
-    LoaderComponent,
-    GenericCardComponent
+    LoaderComponent
   ]
 })
 export class RickandmortyModule { }
