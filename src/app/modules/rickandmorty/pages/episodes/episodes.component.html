@@ -1,0 +1,56 @@
+<div class="row mr-2 ml-2 font-ram">
+  <div class="col-12">
+    <h1 class="title-page text-center mt-5 mb-5 no-select">EPISODES</h1>
+  </div>
+  <div class="mt-2 d-block align-content-center animate__animated animate__fadeIn" [ngClass]="[showCharacters? 'col-12 col-md-6' : 'col-12']">
+    <div class="row mr-3 ml-3">
+      <br>
+      <table class="table table-striped no-select" style="font-size: 2rem; color: #6cac6c;">
+        <thead>
+          <th scope="col">Name</th>
+          <th scope="col">Episode</th>
+          <th scope="col">Air date</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let episode of listEpisodes" class="pointer" (click)="getMultipleCharacters(episode)">
+            <td>{{episode.name !== ''? episode.name: 'N/A'}}</td>
+            <td>{{episode.episode !== ''? episode.episode: 'N/A'}}</td>
+            <td>{{episode.air_date !== ''? episode.air_date: 'N/A'}}</td>
+          </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6 mt-2 d-block align-content-center animate__animated animate__fadeIn" *ngIf="showCharacters">
+    <div class="row">
+      <div class="col-12">
+        <h4 class="font-ram subtitle-page text-center mb-5 no-select">Characters in episode: {{episodeSelected.name}} <span class="pointer" (click)="closeEpisodeSelected()"><i class="fas fa-times-circle"></i></span></h4>
+      </div>
+      <div class="col-12 col-md-3 animate__animated animate__fadeIn" *ngFor="let character of listCharacters">
+        <div class="card text-center h-90 mb-3 pointer container-img" [ngClass]="{'animate__animated animate__fadeIn': isLoading}" >
+          <img class="card-img pt-3 text-center" [src]="character.image" onerror="this.src='assets/images/404.jpeg'" alt="RickAndMorty">
+          <div class="overlay" (click)="goToCharacterDetail(character)">
+            <div class="text font-ram">{{character.name}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <ul class="pagination pagination-lg justify-content-center">
+    <li class="page-item pointer no-select" [ngClass]="{'disabled': currentPage === 1}">
+      <a class="page-link" (click)="setCurrentPage(currentPage-1)">Previous</a>
+    </li>
+    <ng-container *ngFor="let page of pages; let i = index;">
+      <li class="page-item pointer no-select" [ngClass]="{'active': currentPage === i+1 }">
+        <a class="page-link " (click)="setCurrentPage(i+1)">{{i+1}}</a>
+      </li>
+    </ng-container>
+    <li class="page-item pointer no-select" [ngClass]="{'disabled': currentPage === pages.length}">
+      <a class="page-link" (click)="setCurrentPage(currentPage+1)">Next</a>
+    </li>
+  </ul>
+</nav>
+<app-loader *ngIf="isLoading"></app-loader>
