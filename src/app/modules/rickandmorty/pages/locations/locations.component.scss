@@ -1,0 +1,85 @@
+// pagination
+
+.pagination > li > a {
+  background-color: white;
+  color: #69c8ecff;
+}
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover {
+  color: #5a5a5a;
+  background-color: #eee;
+  border-color: #ddd;
+}
+
+.pagination > .active > a {
+  color: white;
+  background-color: #69c8ecff !important;
+  border: solid 1px #69c8ecff !important;
+}
+
+.pagination > .active > a:hover {
+  background-color: #69c8ecff !important;
+  border: solid 1px #69c8ecff;
+}
+
+// title page
+.title-page {
+  margin: 0px;
+  color: #53abee;
+  border: none;
+  font-weight: 900;
+  z-index: 1;
+  font-size: 10vh;
+}
+
+.subtitle-page {
+  margin: 0px;
+  color: #53abee;
+  border: none;
+  font-weight: 200;
+  z-index: 1;
+  font-size: 4vh;
+}
+
+// Character overlay
+
+.container-img {
+  position: relative;
+}
+
+.image {
+  display: block;
+  
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: 0.5s ease;
+  background-color: #53abee;
+}
+
+.container-img:hover .overlay {
+  opacity: .85;
+}
+
+.text {
+  color: white;
+  font-size: 25px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
