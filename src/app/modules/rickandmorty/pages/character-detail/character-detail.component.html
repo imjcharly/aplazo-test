@@ -1,0 +1,48 @@
+<div class="font-ram animate__animated animate__fadeIn no-select" *ngIf="characterData !== null" style="margin: 25px;">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="title-character text-center mt-5 mb-5 ">{{characterData.name}}</h1>
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="card text-center">
+        <img class="card-img text-center" [src]="characterData.image" onerror="this.src='assets/images/404.jpeg'" [alt]="characterData.name">
+      </div>
+    </div>
+    <div class="col-12 col-md-6 mt-2">
+      <div class="row">
+        <div class="col-12 d-block align-content-center">
+          <h1 style="color: #1b6f20;">Information</h1>
+          <br>
+          <table class="table table-striped" style="font-size: 2rem; color: #6cac6c;">
+            <tbody>
+              <tr>
+                <th scope="row">Status</th>
+                <td>{{characterData?.status}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Species</th>
+                <td>{{characterData?.species}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Origin</th>
+                <td>{{characterData?.origin.name}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Location</th>
+                <td>{{characterData?.location.name}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Gender</th>
+                <td>{{characterData?.gender}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <span (click)="goBack()" class="mt-2 pointer no-select" style="position: relative; bottom: 0; color: #6cac6c;"><i class="fas fa-chevron-left fa-2x"></i><span style="font-size: 35px;">&nbsp;back</span></span>
+    </div>
+  </div>
+</div>
+
+
+<app-loader *ngIf="isLoading"></app-loader>

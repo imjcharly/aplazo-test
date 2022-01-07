@@ -1,0 +1,39 @@
+<div class="row mr-2 ml-2" >
+  <div class="col-12">
+    <h1 class="font-ram title-page text-center mt-5 mb-5 no-select">CHARACTERS</h1>
+  </div>
+  
+  <div class="col-12" *ngIf="listCharacters === []">
+    <h3 class="font-ram title-page text-center mt-5 mb-5 no-select">No results found</h3>
+  </div>
+  
+  <div class="col-12 col-md-3 animate__animated animate__fadeIn" *ngFor="let character of listCharacters">
+    <div class="card text-center h-90 mb-3 pointer container-img" [ngClass]="{'animate__animated animate__fadeIn': isLoading}" >
+      <img class="card-img pt-3 text-center" [src]="character.image" onerror="this.src='assets/images/404.jpeg'" alt="RickAndMorty">
+      <div class="overlay" (click)="goToCharacterDetail(character)">
+        <div class="text font-ram">{{character.name}}</div>
+      </div>
+      <div class="card-body align-items-center">
+        <h3 class="card-title font-ram text-center" style="color: #63CBFB;">{{character.name}}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <ul class="pagination pagination-lg justify-content-center">
+    <li class="page-item pointer no-select" [ngClass]="{'disabled': currentPage === 1}">
+      <a class="page-link" (click)="setCurrentPage(currentPage-1)">Previous</a>
+    </li>
+    <ng-container *ngFor="let page of pages; let i = index;">
+      <li class="page-item pointer no-select" *ngIf="i+1 <= currentPage+5 && i+1 >= currentPage || ((i >= pages.length -5) && currentPage === pages.length) " [ngClass]="{'active': currentPage === i+1 }">
+        <a class="page-link " (click)="setCurrentPage(i+1)">{{i+1}}</a>
+      </li>
+    </ng-container>
+    <li class="page-item pointer no-select" [ngClass]="{'disabled': currentPage === pages.length}">
+      <a class="page-link" (click)="setCurrentPage(currentPage+1)">Next</a>
+    </li>
+  </ul>
+</nav>
+
+<app-loader *ngIf="isLoading"></app-loader>
