@@ -1,1 +1,57 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~animate.css/animate.min.css';
+
+/*********************** FONTS ************************/
+
+@font-face {
+  font-family: rickandmorty;
+  src: url(assets/fonts/get_schwifty.ttf);
+}
+
+.font-ram {
+  font-family: rickandmorty;
+}
+
+/*********************** Testing ************************/
+
+.bred {
+  border: solid 1px red !important;
+}
+
+.bblue {
+  border: solid 1px blue !important;
+}
+
+.bgreen {
+  border: solid 1px green !important;
+}
+
+.byellow {
+  border: solid 1px yellow !important;
+}
+
+/*********************** General ************************/
+
+.pointer {
+  cursor: pointer !important;
+}
+
+.outline-none:focus {
+  outline: none !important;
+}
+
+.no-select {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
+.action-disabled {
+  cursor: not-allowed !important;
+  opacity: 0.5 !important;
+}
+
+.no-border {
+  border-color: #6c757d !important;
+  box-shadow: none !important;
+}
