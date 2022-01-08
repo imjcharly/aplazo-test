@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Character } from 'src/app/app.reducers';
 import { AlertService } from 'src/app/services/alert.service';
 import { CharactersService } from 'src/app/services/rickAndMorty/characters.service';
+import { AppState } from 'src/app/app.reducers';
+import { setListCharacter } from '../../../../actions/character.action';
+
 
 @Component({
   selector: 'app-characters',
@@ -24,6 +28,7 @@ export class CharactersComponent implements OnInit {
   nameSearch: string = '';
 
   constructor(
+    private store: Store<AppState>,
     private characters$: CharactersService,
     private route: ActivatedRoute,
     private alert: AlertService,
@@ -41,6 +46,16 @@ export class CharactersComponent implements OnInit {
         this.getCharacters(this.currentPage);
       }
     });
+
+    // store characters
+    this.store.select('characters').subscribe(characters => {
+      this.listCharacters = characters;
+    });
+  }
+
+  setListCharacters(newCharacters: Array<Character>) {
+    this.store.dispatch(setListCharacter({ characters: newCharacters }));
+    this.isLoading = false;
   }
 
   async getCharacters(page: number) {
@@ -48,26 +63,23 @@ export class CharactersComponent implements OnInit {
     if (this.nameSearch !== '') {
       await this.characters$.getCharactersByNamePagination(page, this.nameSearch).subscribe((response) => {
         this.pages = [...Array(response.info.pages).keys()];
-        this.listCharacters = response.results;
-        this.isLoading = false;
+        this.setListCharacters(response.results);
       }, (error) => {
         console.error(error);
         this.alert.showAlert(JSON.stringify(error.error.error), 'info');
         this.pages = [];
-        this.listCharacters = [];
-        this.isLoading = false;
+        this.setListCharacters([]);
       }
       );
     } else {
       await this.characters$.getCharactersPagination(page).subscribe((response) => {
         this.pages = [...Array(response.info.pages).keys()];
-        this.listCharacters = response.results;
-        this.isLoading = false;
+        this.setListCharacters(response.results);
       }, (error) => {
         console.error(error);
+        this.alert.showAlert(JSON.stringify(error.error.error), 'info');
         this.pages = [];
-        this.listCharacters = [];
-        this.isLoading = false;
+        this.setListCharacters([]);
       }
       );
     }

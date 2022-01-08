@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { counterReducer } from './components/counter/counter.reducer';
+import { paginatorReducer } from './reducers/paginator.reducer';
 
 // Components
 import { SonComponent } from './components/counter/son/son.component';
@@ -15,6 +16,7 @@ import { GrandsonComponent } from './components/counter/grandson/grandson.compon
 import { CounterPrincipalComponent } from './components/counter-principal/counter-principal.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
+import { characterReducer } from './reducers/character.reducer';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,11 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot({ counter: counterReducer }),
+    StoreModule.forRoot(
+      {
+        characters: characterReducer
+      },
+    ),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
