@@ -40,7 +40,6 @@ export interface Location {
 }
 
 export interface AppState {
-  counter: number;
   characters: Array<Character>;
   episodes: Array<Episode>;
   locations: Array<Location>;

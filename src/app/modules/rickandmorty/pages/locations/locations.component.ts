@@ -69,7 +69,6 @@ export class LocationsComponent implements OnInit {
     });
 
     this.store.select('locations').subscribe(locations => {
-      console.log('Locations in store', locations);
       this.listLocations = locations;
     });
   }
