@@ -6,7 +6,7 @@ import { AlertService } from 'src/app/services/alert.service';
 import { Episode } from 'src/app/app.reducers';
 import { Character, AppState } from 'src/app/app.reducers';
 import { Store } from '@ngrx/store';
-import { setListEpisode } from '../../../../actions/episode.action';
+import { setListEpisode } from 'src/app/actions/episode.action';
 
 @Component({
   selector: 'app-episodes',
@@ -84,8 +84,7 @@ export class EpisodesComponent implements OnInit {
         this.alert.showAlert(JSON.stringify(error.error.error), 'info');
         this.pages = [];
         this.setListEpisodes([]);
-      }
-      );
+      });
     } else {
       await this.episodes$.getEpisodesPagination(page).subscribe((episodes) => {
         this.pages = [...Array(episodes.info.pages).keys()];

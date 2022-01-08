@@ -7,22 +7,18 @@ import { environment } from 'src/environments/environment';
 // ngrx
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+// reducers
 import { characterReducer } from './reducers/character.reducer';
 import { episodeReducer } from './reducers/episode.reducer';
+import { locationReducer } from './reducers/location.reducer';
 
 // Components
-import { SonComponent } from './components/counter/son/son.component';
-import { GrandsonComponent } from './components/counter/grandson/grandson.component';
-import { CounterPrincipalComponent } from './components/counter-principal/counter-principal.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SonComponent,
-    GrandsonComponent,
-    CounterPrincipalComponent,
     HeaderComponent,
 
   ],
@@ -33,7 +29,8 @@ import { HttpClientModule } from '@angular/common/http';
     StoreModule.forRoot(
       {
         characters: characterReducer,
-        episodes: episodeReducer
+        episodes: episodeReducer,
+        locations: locationReducer
       },
     ),
     StoreDevtoolsModule.instrument({

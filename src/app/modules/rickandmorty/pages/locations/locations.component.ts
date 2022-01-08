@@ -3,7 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CharactersService } from 'src/app/services/rickAndMorty/characters.service';
 import { LocationsService } from 'src/app/services/rickAndMorty/locations.service';
 import { AlertService } from 'src/app/services/alert.service';
-import { Character, Location } from '../../../../app.reducers';
+import { Store } from '@ngrx/store';
+import { Character, Location, AppState } from 'src/app/app.reducers';
+import { setListLocation } from 'src/app/actions/location.action';
 
 @Component({
   selector: 'app-locations',
@@ -44,6 +46,7 @@ export class LocationsComponent implements OnInit {
   nameSearch: string = '';
 
   constructor(
+    private store: Store<AppState>,
     private characters$: CharactersService,
     private location$: LocationsService,
     private alert: AlertService,
@@ -55,6 +58,7 @@ export class LocationsComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       if (params['name']) {
         this.nameSearch = params['name'];
+        this.currentPage = 1;
         this.getLocations(this.currentPage);
         this.closeLocationSelected();
       } else {
@@ -63,6 +67,11 @@ export class LocationsComponent implements OnInit {
         this.getLocations(this.currentPage);
       }
     });
+
+    this.store.select('locations').subscribe(locations => {
+      console.log('Locations in store', locations);
+      this.listLocations = locations;
+    });
   }
 
   async getLocations(page: number) {
@@ -70,27 +79,29 @@ export class LocationsComponent implements OnInit {
     if (this.nameSearch !== '') {
       await this.location$.getLocationsByNamePagination(page, this.nameSearch).subscribe((locations) => {
         this.pages = [...Array(locations.info.pages).keys()];
-        this.listLocations = locations.results;
-        this.isLoading = false;
+        this.setListLocations(locations.results);
       }, (error) => {
         console.error(error);
         this.alert.showAlert(JSON.stringify(error.error.error), 'info');
         this.pages = [];
-        this.listLocations = [];
-        this.isLoading = false;
+        this.setListLocations([]);
       });
     } else {
       await this.location$.getLocationsPagination(page).subscribe((locations) => {
         this.pages = [...Array(locations.info.pages).keys()];
-        this.listLocations = locations.results;
-        this.isLoading = false;
+        this.setListLocations(locations.results);
       }, (error) => {
         console.error(error);
-        this.isLoading = false;
-        this.listLocations = [];
-      }
-      );
+        this.alert.showAlert(JSON.stringify(error.error.error), 'info');
+        this.pages = [];
+        this.setListLocations([]);
+      });
     }
+  }
+
+  setListLocations(newLocations: Array<Location>) {
+    this.store.dispatch(setListLocation({ locations: newLocations }));
+    this.isLoading = false;
   }
 
   async getMultipleCharacters(location: Location) {
