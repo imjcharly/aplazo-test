@@ -1,11 +1,3 @@
-export interface InfoPage {
-  count: number;
-  pages: number;
-  next: string;
-  prev: string;
-  currentPage: number;
-}
-
 export interface Character {
   created: string; //	Time at which the character was created in the database
   episode: Array<string>; // (urls)	List of episodes in which this character appeared
