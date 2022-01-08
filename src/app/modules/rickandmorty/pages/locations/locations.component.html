@@ -5,29 +5,31 @@
   <div class="mt-2 d-block align-content-center animate__animated animate__fadeIn" [ngClass]="[showCharacters? 'col-12 col-md-6' : 'col-12']">
     <div class="row mr-3 ml-3">
       <br>
-      <table class="table table-striped no-select" style="font-size: 2rem; color: #53abee;">
-        <thead>
-          <th scope="col">Name</th>
-          <th scope="col">Dimension</th>
-          <th scope="col">Type</th>
-        </thead>
-        <tbody>
-          <tr *ngFor="let location of listLocations" class="pointer" (click)="getMultipleCharacters(location)">
-            <td>{{location.name !== ''? location.name: 'N/A'}}</td>
-            <td>{{location.dimension !== ''? location.dimension: 'N/A'}}</td>
-            <td>{{location.type !== ''? location.type: 'N/A'}}</td>
-          </tr>
-      </table>
+      <div class="table-responsive">
+        <table class="table table-striped no-select" style="font-size: 1.2rem; color: #53abee;">
+          <thead>
+            <th scope="col">Name</th>
+            <th scope="col">Dimension</th>
+            <th scope="col">Type</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let location of listLocations" class="pointer" (click)="getMultipleCharacters(location)">
+              <td>{{location.name !== ''? location.name: 'N/A'}}</td>
+              <td>{{location.dimension !== ''? location.dimension: 'N/A'}}</td>
+              <td>{{location.type !== ''? location.type: 'N/A'}}</td>
+            </tr>
+        </table>
+      </div>
     </div>
   </div>
 
   <div class="col-12 col-md-6 mt-2 d-block align-content-center animate__animated animate__fadeIn" *ngIf="showCharacters">
     <div class="row">
       <div class="col-12">
-        <h4 class="font-ram subtitle-page text-center mb-5 no-select">Characters in location: {{locationSelected.name}} <span class="pointer" (click)="closeLocationSelected()"><i class="fas fa-times-circle"></i></span></h4>
+        <h4 class="font-ram subtitle-page text-center mb-5 no-select">Characters in location: {{locationSelected.name}} <span class="pointer" (click)="closeLocationSelected()"><i class="far fa-times-circle"></i></span></h4>
       </div>
       <div class="col-12 col-md-3 animate__animated animate__fadeIn" *ngFor="let character of listCharacters">
-        <div class="card text-center h-90 mb-3 pointer container-img" [ngClass]="{'animate__animated animate__fadeIn': isLoading}" >
+        <div class="card text-center h-90 mb-3 pointer container-img" [ngClass]="{'animate__animated animate__fadeIn': isLoading}">
           <img class="card-img pt-3 text-center" [src]="character.image" onerror="this.src='assets/images/404.jpeg'" alt="RickAndMorty">
           <div class="overlay" (click)="goToCharacterDetail(character)">
             <div class="text font-ram">{{character.name}}</div>
