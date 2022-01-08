@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Character } from 'src/app/app.reducers';
 import { AlertService } from 'src/app/services/alert.service';
 import { CharactersService } from 'src/app/services/rickAndMorty/characters.service';
 
 @Component({
   selector: 'app-characters',
   templateUrl: './characters.component.html',
-  styleUrls: ['./characters.component.scss']
+  styleUrls: ['./characters.component.scss'],
 })
 export class CharactersComponent implements OnInit {
-
   // loader
   isLoading: boolean = false;
 
@@ -18,7 +18,7 @@ export class CharactersComponent implements OnInit {
   currentPage: number = 1;
 
   // list characters of current page
-  listCharacters: any = null;
+  listCharacters: Array<Character> = [];
 
   // name search
   nameSearch: string = '';
@@ -27,10 +27,11 @@ export class CharactersComponent implements OnInit {
     private characters$: CharactersService,
     private route: ActivatedRoute,
     private alert: AlertService,
-    private router: Router) { }
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       if (params['name']) {
         this.nameSearch = params['name'];
         this.getCharacters(this.currentPage);
@@ -40,40 +41,38 @@ export class CharactersComponent implements OnInit {
         this.getCharacters(this.currentPage);
       }
     });
-
   }
 
   async getCharacters(page: number) {
     this.isLoading = true;
     if (this.nameSearch !== '') {
-      await this.characters$.getCharactersByNamePagination(page, this.nameSearch).subscribe(response => {
+      await this.characters$.getCharactersByNamePagination(page, this.nameSearch).subscribe((response) => {
+        console.log(response);
         this.pages = [...Array(response.info.pages).keys()];
         this.listCharacters = response.results;
         this.isLoading = false;
-      }, error => {
+      }, (error) => {
         console.error(error);
         this.alert.showAlert(JSON.stringify(error.error.error), 'info');
         this.pages = [];
         this.listCharacters = [];
         this.isLoading = false;
-      });
+      }
+      );
     } else {
-      await this.characters$.getCharactersPagination(page).subscribe(response => {
+      await this.characters$.getCharactersPagination(page).subscribe((response) => {
+        console.log(response);
         this.pages = [...Array(response.info.pages).keys()];
         this.listCharacters = response.results;
         this.isLoading = false;
-      }, error => {
+      }, (error) => {
         console.error(error);
         this.pages = [];
         this.listCharacters = [];
         this.isLoading = false;
-      });
+      }
+      );
     }
-  }
-
-  searchCharacters(name: string) {
-    this.isLoading = true;
-    this
   }
 
   setCurrentPage(newPage: number) {
@@ -81,8 +80,7 @@ export class CharactersComponent implements OnInit {
     this.getCharacters(this.currentPage);
   }
 
-  goToCharacterDetail(character: any) {
+  goToCharacterDetail(character: Character) {
     this.router.navigate(['/rick-and-morty/character-detail', character.id]);
   }
-
 }

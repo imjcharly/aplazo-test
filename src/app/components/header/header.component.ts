@@ -15,17 +15,14 @@ export class HeaderComponent implements OnInit {
     {
       route: '/rick-and-morty/characters',
       label: 'Characters',
-      active: false
     },
     {
       route: '/rick-and-morty/episodes',
       label: 'Episodes',
-      active: false
     },
     {
       route: '/rick-and-morty/locations',
       label: 'Locations',
-      active: false
     }
   ];
 
