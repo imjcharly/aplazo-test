@@ -16,7 +16,7 @@ export class CharacterDetailComponent implements OnInit {
     episode: [],
     id: 0,
     gender: '',
-    image: '',
+    image: 'assets/images/404.jpeg',
     location: {
       name: '',
       url: ''
