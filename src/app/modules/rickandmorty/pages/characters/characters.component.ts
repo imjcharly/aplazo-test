@@ -47,7 +47,6 @@ export class CharactersComponent implements OnInit {
     this.isLoading = true;
     if (this.nameSearch !== '') {
       await this.characters$.getCharactersByNamePagination(page, this.nameSearch).subscribe((response) => {
-        console.log(response);
         this.pages = [...Array(response.info.pages).keys()];
         this.listCharacters = response.results;
         this.isLoading = false;
@@ -61,7 +60,6 @@ export class CharactersComponent implements OnInit {
       );
     } else {
       await this.characters$.getCharactersPagination(page).subscribe((response) => {
-        console.log(response);
         this.pages = [...Array(response.info.pages).keys()];
         this.listCharacters = response.results;
         this.isLoading = false;
