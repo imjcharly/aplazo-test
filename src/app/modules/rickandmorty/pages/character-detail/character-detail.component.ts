@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CharactersService } from 'src/app/services/rickAndMorty/characters.service';
+import { Character } from 'src/app/app.reducers';
 
 @Component({
   selector: 'app-character-detail',
@@ -10,7 +11,26 @@ import { CharactersService } from 'src/app/services/rickAndMorty/characters.serv
 export class CharacterDetailComponent implements OnInit {
 
   id: string = '';
-  characterData: any = null;
+  characterData: Character = {
+    created: '',
+    episode: [],
+    id: 0,
+    gender: '',
+    image: '',
+    location: {
+      name: '',
+      url: ''
+    },
+    name: '',
+    origin: {
+      name: '',
+      url: ''
+    },
+    status: '',
+    species: '',
+    type: '',
+    url: '',
+  };
   isLoading: boolean = false;
 
   constructor(
