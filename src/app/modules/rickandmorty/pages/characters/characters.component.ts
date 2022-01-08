@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { Character } from 'src/app/app.reducers';
 import { AlertService } from 'src/app/services/alert.service';
 import { CharactersService } from 'src/app/services/rickAndMorty/characters.service';
 import { AppState } from 'src/app/app.reducers';
+import { Store } from '@ngrx/store';
 import { setListCharacter } from '../../../../actions/character.action';
-
 
 @Component({
   selector: 'app-characters',
@@ -39,6 +38,7 @@ export class CharactersComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       if (params['name']) {
         this.nameSearch = params['name'];
+        this.currentPage = 1;
         this.getCharacters(this.currentPage);
       } else {
         this.nameSearch = '';
@@ -51,11 +51,6 @@ export class CharactersComponent implements OnInit {
     this.store.select('characters').subscribe(characters => {
       this.listCharacters = characters;
     });
-  }
-
-  setListCharacters(newCharacters: Array<Character>) {
-    this.store.dispatch(setListCharacter({ characters: newCharacters }));
-    this.isLoading = false;
   }
 
   async getCharacters(page: number) {
@@ -72,9 +67,9 @@ export class CharactersComponent implements OnInit {
       }
       );
     } else {
-      await this.characters$.getCharactersPagination(page).subscribe((response) => {
-        this.pages = [...Array(response.info.pages).keys()];
-        this.setListCharacters(response.results);
+      await this.characters$.getCharactersPagination(page).subscribe((characters) => {
+        this.pages = [...Array(characters.info.pages).keys()];
+        this.setListCharacters(characters.results);
       }, (error) => {
         console.error(error);
         this.alert.showAlert(JSON.stringify(error.error.error), 'info');
@@ -83,6 +78,11 @@ export class CharactersComponent implements OnInit {
       }
       );
     }
+  }
+
+  setListCharacters(newCharacters: Array<Character>) {
+    this.store.dispatch(setListCharacter({ characters: newCharacters }));
+    this.isLoading = false;
   }
 
   setCurrentPage(newPage: number) {

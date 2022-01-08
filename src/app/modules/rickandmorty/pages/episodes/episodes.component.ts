@@ -4,7 +4,9 @@ import { EpisodesService } from 'src/app/services/rickAndMorty/episodes.service'
 import { CharactersService } from 'src/app/services/rickAndMorty/characters.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { Episode } from 'src/app/app.reducers';
-import { Character } from '../../../../app.reducers';
+import { Character, AppState } from 'src/app/app.reducers';
+import { Store } from '@ngrx/store';
+import { setListEpisode } from '../../../../actions/episode.action';
 
 @Component({
   selector: 'app-episodes',
@@ -44,6 +46,7 @@ export class EpisodesComponent implements OnInit {
   nameSearch: string = '';
 
   constructor(
+    private store: Store<AppState>,
     private characters$: CharactersService,
     private episodes$: EpisodesService,
     private route: ActivatedRoute,
@@ -55,6 +58,7 @@ export class EpisodesComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       if (params['name']) {
         this.nameSearch = params['name'];
+        this.currentPage = 1;
         this.getEpisodes(this.currentPage);
         this.closeEpisodeSelected();
       } else {
@@ -63,6 +67,10 @@ export class EpisodesComponent implements OnInit {
         this.getEpisodes(this.currentPage);
       }
     });
+
+    this.store.select('episodes').subscribe(episodes => {
+      this.listEpisodes = episodes;
+    });
   }
 
   async getEpisodes(page: number) {
@@ -70,29 +78,31 @@ export class EpisodesComponent implements OnInit {
     if (this.nameSearch !== '') {
       await this.episodes$.getEpisodesByNamePagination(page, this.nameSearch).subscribe((episodes) => {
         this.pages = [...Array(episodes.info.pages).keys()];
-        this.listEpisodes = episodes.results;
-        this.isLoading = false;
+        this.setListEpisodes(episodes.results)
       }, (error) => {
         console.error(error);
         this.alert.showAlert(JSON.stringify(error.error.error), 'info');
         this.pages = [];
-        this.listEpisodes = [];
-        this.isLoading = false;
+        this.setListEpisodes([]);
       }
       );
     } else {
       await this.episodes$.getEpisodesPagination(page).subscribe((episodes) => {
         this.pages = [...Array(episodes.info.pages).keys()];
-        this.listEpisodes = episodes.results;
-        this.isLoading = false;
+        this.setListEpisodes(episodes.results);
       }, (error) => {
         console.error(error);
+        this.alert.showAlert(JSON.stringify(error.error.error), 'info');
         this.pages = [];
-        this.listEpisodes = [];
-        this.isLoading = false;
+        this.setListEpisodes([]);
       }
       );
     }
+  }
+
+  setListEpisodes(newEpisodes: Array<Episode>) {
+    this.store.dispatch(setListEpisode({ episodes: newEpisodes }));
+    this.isLoading = false;
   }
 
   async getMultipleCharacters(episode: Episode) {
