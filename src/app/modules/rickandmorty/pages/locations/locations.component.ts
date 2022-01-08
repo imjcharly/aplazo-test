@@ -109,6 +109,7 @@ export class LocationsComponent implements OnInit {
       this.alert.showAlert('There is no residents in this location', 'info');
       this.listCharacters = [];
       this.isLoading = false;
+      this.showCharacters = false;
     }
   }
 

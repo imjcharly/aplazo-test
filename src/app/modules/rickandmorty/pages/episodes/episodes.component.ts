@@ -105,6 +105,7 @@ export class EpisodesComponent implements OnInit {
       this.alert.showAlert('There is no characters in this episode', 'info');
       this.listCharacters = [];
       this.isLoading = false;
+      this.showCharacters = false;
     }
   }
 
