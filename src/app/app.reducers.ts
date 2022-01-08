@@ -1,7 +1,3 @@
-export interface AppState {
-  counter: number;
-}
-
 export interface InfoPage {
   count: number;
   pages: number;
@@ -16,9 +12,15 @@ export interface Character {
   id: number; //	The id of the character
   gender: string; //	The gender of the character('Female', 'Male', 'Genderless' or 'unknown')
   image: string; // (url)	Link to the character's image. All images are 300x300px and most are medium shots or portraits since they are intended to be used as avatars
-  location: object; //	Name and link to the character's last known location endpoint
+  location: {
+    name: string,
+    url: string
+  }; //	Name and link to the character's last known location endpoint
   name: string; //	The name of the character
-  origin: object; //	Name and link to the character's origin location
+  origin: {
+    name: string,
+    url: string
+  }; //	Name and link to the character's origin location
   status: string; //	The status of the character('Alive', 'Dead' or 'unknown')
   species: string; //	The species of the character
   type: string; //	The type or subspecies of the character
@@ -44,3 +46,17 @@ export interface Location {
   url: string; //(url) Link to the location's own endpoint.
   created: string; // Time at which the location was created in the database.
 }
+
+export interface AppState {
+  counter: number;
+  characters: Array<Character>;
+  episodes: Array<Episode>;
+  locations: Array<Location>;
+  paginator: {
+    firstPage: number,
+    currentPage: number,
+    maxPages: number,
+  }
+}
+
+

@@ -9,7 +9,6 @@ import { CharactersComponent } from './pages/characters/characters.component';
 
 import { LoaderComponent } from 'src/app/components/loader/loader.component';
 
-
 @NgModule({
   declarations: [
     EpisodesComponent,
@@ -21,7 +20,6 @@ import { LoaderComponent } from 'src/app/components/loader/loader.component';
   imports: [
     CommonModule,
     RickandmortyRoutingModule,
-
   ],
   exports: [
     LoaderComponent
