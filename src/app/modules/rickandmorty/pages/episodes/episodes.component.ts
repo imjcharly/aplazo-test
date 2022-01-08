@@ -43,6 +43,7 @@ export class EpisodesComponent implements OnInit {
       if (params['name']) {
         this.nameSearch = params['name'];
         this.getEpisodes(this.currentPage);
+        this.closeEpisodeSelected();
       } else {
         this.nameSearch = '';
         this.currentPage = 1;

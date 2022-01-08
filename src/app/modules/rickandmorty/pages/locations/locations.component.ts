@@ -44,6 +44,7 @@ export class LocationsComponent implements OnInit {
       if (params['name']) {
         this.nameSearch = params['name'];
         this.getLocations(this.currentPage);
+        this.closeLocationSelected();
       } else {
         this.nameSearch = '';
         this.currentPage = 1;

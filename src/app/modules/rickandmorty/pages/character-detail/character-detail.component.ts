@@ -36,7 +36,6 @@ export class CharacterDetailComponent implements OnInit {
   }
 
   goBack() {
-    // this.router.navigate(['..']);
     window.history.back();
   }
 

@@ -42,10 +42,14 @@ export class HeaderComponent implements OnInit {
   search(name: string) {
     if (name !== '') {
       this.searchInput.nativeElement.value = '';
-      var snapshot = this.route.snapshot;
+      const snapshot = this.route.snapshot;
       const params = { ...snapshot.queryParams };
-      delete params['name']
-      this.router.navigate([], { queryParams: { name } });
+      delete params['name'];
+      if (this.router.url.includes('character-detail')) {
+        this.router.navigate(['/rick-and-morty/characters'], { queryParams: { name } });
+      } else {
+        this.router.navigate([], { queryParams: { name } });
+      }
     }
   }
 
