@@ -7,6 +7,7 @@ import { Episode } from 'src/app/app.reducers';
 import { Character, AppState } from 'src/app/app.reducers';
 import { Store } from '@ngrx/store';
 import { setListEpisode } from 'src/app/actions/episode.action';
+import { setLastRoute } from 'src/app/actions/router.actions';
 
 @Component({
   selector: 'app-episodes',
@@ -144,6 +145,7 @@ export class EpisodesComponent implements OnInit {
   }
 
   goToCharacterDetail(character: Character) {
+    this.store.dispatch(setLastRoute({ route: this.router.url }));
     this.router.navigate(['/rick-and-morty/character-detail', character.id]);
   }
 }

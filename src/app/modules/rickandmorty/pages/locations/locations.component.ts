@@ -6,6 +6,7 @@ import { AlertService } from 'src/app/services/alert.service';
 import { Store } from '@ngrx/store';
 import { Character, Location, AppState } from 'src/app/app.reducers';
 import { setListLocation } from 'src/app/actions/location.action';
+import { setLastRoute } from 'src/app/actions/router.actions';
 
 @Component({
   selector: 'app-locations',
@@ -140,6 +141,7 @@ export class LocationsComponent implements OnInit {
   }
 
   goToCharacterDetail(character: Character) {
+    this.store.dispatch(setLastRoute({ route: this.router.url }));
     this.router.navigate(['/rick-and-morty/character-detail', character.id]);
   }
 }

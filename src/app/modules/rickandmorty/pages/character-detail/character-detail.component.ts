@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CharactersService } from 'src/app/services/rickAndMorty/characters.service';
-import { Character } from 'src/app/app.reducers';
+import { AppState, Character } from 'src/app/app.reducers';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-character-detail',
@@ -33,7 +34,10 @@ export class CharacterDetailComponent implements OnInit {
   };
   isLoading: boolean = false;
 
+  lastRoute: string = '';
+
   constructor(
+    private store: Store<AppState>,
     private router: Router,
     private character$: CharactersService,
     private route: ActivatedRoute) { }
@@ -41,6 +45,9 @@ export class CharacterDetailComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id') || '';
     this.getSingleCharacter();
+    this.store.select('route').subscribe(route => {
+      this.lastRoute = route;
+    });
   }
 
   getSingleCharacter() {
@@ -56,7 +63,7 @@ export class CharacterDetailComponent implements OnInit {
   }
 
   goBack() {
-    window.history.back();
+    this.router.navigateByUrl(this.lastRoute);
   }
 
 }
