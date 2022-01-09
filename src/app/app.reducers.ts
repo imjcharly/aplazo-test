@@ -43,11 +43,12 @@ export interface AppState {
   characters: Array<Character>;
   episodes: Array<Episode>;
   locations: Array<Location>;
+  route: string;
   paginator: {
     firstPage: number,
     currentPage: number,
     maxPages: number,
-  }
+  };
 }
 
 

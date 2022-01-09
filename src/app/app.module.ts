@@ -15,6 +15,7 @@ import { locationReducer } from './reducers/location.reducer';
 // Components
 import { HeaderComponent } from './components/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
+import { routeReducer } from './reducers/router.reducer';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { HttpClientModule } from '@angular/common/http';
       {
         characters: characterReducer,
         episodes: episodeReducer,
-        locations: locationReducer
+        locations: locationReducer,
+        route: routeReducer
       },
     ),
     StoreDevtoolsModule.instrument({
